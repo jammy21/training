@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bbodeum.dog.dao.DogMapper">
+<!-- 	등록이요 -->
+	<insert id="addDog" parameterType="map">
+	insert into dog(dog_id, dog_mem_id, dog_name, dog_breed, dog_birthday, dog_weight, dog_remark, dog_status) 
+	values(#{dogId}, #{Member}, #{dogName}, #{dogBreed}, #{dogBirth}, #{dogWeight}, #{dogRemark}, 1)
+	</insert>
+
+	
+<!-- 	수정이요 -->
+	<update id="editDog" parameterType="map">
+	update dog set dog_weight=#{dog_weight} where dog_id=#{dog_id}	
+	</update>
+	
+	
+<!-- 	삭제요 -->
+	<update id="delDog" parameterType="map">
+	update dog set dog_status=-1 where dog_id=#{dog_id}
+	</update>
+	
+	
+<!-- 	회원별 검색이요 -->
+	<select id="selectByMemId" parameterType="map">	
+	select*from dog where dog_mem_id = #{dog_mem_id}	
+	</select>
+	
+
+</mapper>

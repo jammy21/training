@@ -18,5 +18,5 @@ public class Trainer {
 	private String trEmail;
 	private String trCareer;
 	private String trLicense;
-	private String trStatus;
+	private int trStatus;
 }

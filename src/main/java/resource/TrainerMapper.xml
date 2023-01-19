@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bbodeum.trainer.dao.TrainerMapper">
+	<resultMap id="trainerMap" type="Trainer" autoMapping="true"></resultMap>
+	
+	<insert id="addTrainer" parameterType="map">
+        insert into trainer(tr_id, tr_pwd, tr_name, tr_tel, tr_email, tr_career, tr_license, tr_status) 
+        values (#{trId}, #{trPwd}, #{trName}, #{trTel}, #{trEmail}, #{trCareer}, #{trLicense}, 1)
+    </insert>
+ 
+    <update id="editTrainer" parameterType="map">
+        update trainer set tr_pwd=#{trPwd},tr_name=#{trName},tr_tel=#{trTel},tr_email=#{trEmail}, 
+        tr_career=#{trCareer}, tr_license=#{trLicense} where tr_id=#{trId}
+    </update>
+    
+    <update id="editStatusTrainer" parameterType="map">
+        update trainer set tr_status=-1 where tr_id=#{trId}
+    </update>
+    
+    <select id="selectByTrId" parameterType="map" resultMap="trainerMap">
+    	select * from trainer where tr_id=#{trId}
+    </select>
+	
+	<select id="selectAll" parameterType="map" resultMap="trainerMap">
+    	select * from(select rownum rn, t.* from trainer t order by t.tr_name) where rn between #{start} and #{end}
+    </select>
+	
+</mapper>

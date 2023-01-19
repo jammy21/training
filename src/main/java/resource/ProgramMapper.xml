@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bbodeum.program.dao.ProgramMapper">
+	<resultMap id="programMap" type="Program" autoMapping="true">
+		<association property="trainer" javaType="Trainer" autoMapping="true"></association>
+		<association property="keyword" javaType="Keyword" autoMapping="true"></association>
+		<collection property="apply" ofType="Apply" autoMapping="true">
+			<association property="dog" javaType="Dog" autoMapping="true"></association>
+		</collection>
+	</resultMap>
+	
+  <select id="selectByTrAndKeyAndDy" parameterType="map" resultMap="programMap">
+    SELECT 
+			*
+			FROM (SELECT a.*, ROWNUM as rnum
+			FROM (SELECT c.* ,  b.* , d.*, ap.*
+			FROM program b join trainer c
+			ON tr_id=prog_tr_id
+			join keyword d
+			on prog_key_id=key_id
+			JOIN apply ap ON ap.apply_prog_id = b.prog_id
+			WHERE  prog_key_id=#{keyId} 
+			AND to_char(prog_start_date, 'dy')=#{dy} 
+			AND prog_tr_id=#{trId}
+			ORDER BY prog_due)
+			a) WHERE rnum BETWEEN #{start} AND #{end}
+  </select>
+</mapper>

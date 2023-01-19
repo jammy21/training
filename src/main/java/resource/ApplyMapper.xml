@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bbodeum.apply.dao.ApplyMapper">
+	<!-- <resultMap id="applyMap" type="Apply" autoMapping="true"></resultMap> -->
+	
+	<insert id="addApply" parameterType="map">
+        insert into apply(apply_dog_id, apply_prog_id, apply_status, apply_date) 
+        values (#{dogId}, #{progId}, 0, sysdate)
+    </insert>
+    
+    <update id="editStatusApply1" parameterType="map">
+        update apply set apply_status=1 where apply_prog_id=#{progId} and apply_dog_id=#{dogId}
+    </update>
+    
+    <update id="editStatusApply2" parameterType="map">
+        update apply set apply_status=-1 where apply_prog_id=#{progId} and apply_dog_id=#{dogId}
+    </update>
+    
+    <update id="editStatusApply3" parameterType="map">
+        update apply set apply_status=-2 where apply_prog_id=#{progId} and apply_dog_id=#{dogId}
+    </update>
+	
+</mapper>
